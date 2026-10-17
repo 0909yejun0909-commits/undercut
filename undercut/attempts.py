@@ -14,6 +14,9 @@ CHECK_OFFSET = 1
 COLUMNS = ["race_id", "year", "rnd", "chaser", "leader", "chaser_code", "leader_code", "lap", "gap_s", "responded",
            "leader_pit_lap", "delay", "check_lap", "success", "chaser_ahead_end", "chaser_age", "leader_age",
            "chaser_old", "chaser_new", "leader_old"]
+DTYPES = {"year": int, "rnd": int, "chaser": int, "leader": int, "lap": int, "responded": bool,
+          **{c: float for c in ("gap_s", "leader_pit_lap", "delay", "check_lap", "success", "chaser_ahead_end",
+                                "chaser_age", "leader_age")}}
 
 
 def stops(laps):
@@ -29,7 +32,7 @@ def stops(laps):
 
 def find_attempts(laps, info, window_s=WINDOW_S, max_delay=MAX_DELAY, check_offset=CHECK_OFFSET, require_green=True):
     if info.get("wet") or laps.empty:
-        return pd.DataFrame(columns=COLUMNS)
+        return _frame([])
     piv = lambda col: laps.pivot(index="LapNumber", columns="DriverNumber", values=col)
     E, C, A = piv("end_s"), piv("Compound"), piv("TyreLife")
     G = piv("green").reindex_like(E).eq(True)  # missing laps are not green
@@ -73,4 +76,9 @@ def find_attempts(laps, info, window_s=WINDOW_S, max_delay=MAX_DELAY, check_offs
                          check_lap=float(check), success=ahead if resp else np.nan,
                          chaser_ahead_end=np.nan if resp else ahead, chaser_age=A.at[n - 1, b], leader_age=A.at[n - 1, a],
                          chaser_old=C.at[n - 1, b], chaser_new=C.at[n + 1, b], leader_old=C.at[n - 1, a]))
-    return pd.DataFrame(rows, columns=COLUMNS)
+    return _frame(rows)
+
+
+def _frame(rows):
+    """Fixed dtypes, so concatenating with an empty race keeps `responded` boolean."""
+    return pd.DataFrame(rows, columns=COLUMNS).astype(DTYPES)

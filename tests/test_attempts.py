@@ -88,3 +88,10 @@ def test_check_offset_two_checks_one_lap_later():
 def test_wet_race_returns_empty_frame_with_columns():
     a = attempts.find_attempts(make_laps(PAIR(1.0)), {**INFO, "wet": True})
     assert a.empty and list(a.columns) == attempts.COLUMNS
+
+
+def test_concat_with_empty_race_keeps_responded_boolean():
+    import pandas as pd
+    a = pd.concat([attempts.find_attempts(make_laps(PAIR(1.0)), {**INFO, "wet": True}),
+                   attempts.find_attempts(make_laps(PAIR(1.0)), INFO)], ignore_index=True)
+    assert a.responded.dtype == bool and (~a.responded).sum() == 0
