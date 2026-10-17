@@ -1,0 +1,20 @@
+[project]
+name = "undercut"
+version = "0.1.0"
+description = "When does the undercut work? Pit-stop undercuts in Formula 1, 2023-2026"
+requires-python = ">=3.12"
+dependencies = [
+    "fastf1>=3.8.3",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pandas>=2.3.3",
+    "pyarrow>=26.0.0",
+    "statsmodels>=0.15.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=9.1.1"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

@@ -1,0 +1,10 @@
+.superpowers/
+data/
+results/*.parquet
+__pycache__/
+.venv/
+paper/*.aux
+paper/*.log
+paper/*.blg
+paper/*.bbl
+paper/*.out
