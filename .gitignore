@@ -8,3 +8,4 @@ paper/*.log
 paper/*.blg
 paper/*.bbl
 paper/*.out
+figures/*.png
