@@ -71,7 +71,7 @@ def fig3_models():
     ax.set_yticks(list(y), [MODEL_NAMES[m] for m in order])
     ax.invert_yaxis()
     ax.set_xlabel("Brier score (lower is better)")
-    ax.legend(loc="lower right", fontsize=8)
+    ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2, fontsize=8)
     return fig
 
 
