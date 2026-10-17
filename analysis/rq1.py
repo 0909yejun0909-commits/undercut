@@ -33,11 +33,12 @@ def rates(d):
 
 
 def odds_with_scaled(res):
-    """Adds degradation per 0.1 s/lap (a realistic step; per 1 s/lap the odds ratio is astronomically large)."""
+    """Adds degradation per 0.01 s/lap of tyre age (about the spread between circuits; per 1 s/lap the odds ratio is
+    astronomically large because no circuit comes close to 1 s/lap)."""
     t = models.odds_table(res)
     r = t[t.term == "deg_s_per_lap"].iloc[0]
-    extra = dict(term="deg_per_0.1s_per_lap", odds_ratio=r.odds_ratio ** 0.1, ci_lo=r.ci_lo ** 0.1,
-                 ci_hi=r.ci_hi ** 0.1, p=r.p)
+    extra = dict(term="deg_per_0.01s_per_lap", odds_ratio=r.odds_ratio ** 0.01, ci_lo=r.ci_lo ** 0.01,
+                 ci_hi=r.ci_hi ** 0.01, p=r.p)
     return pd.concat([t, pd.DataFrame([extra])], ignore_index=True)
 
 

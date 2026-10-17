@@ -19,6 +19,18 @@ def scores(pred, label):
     return rows
 
 
+def rule_summary(d):
+    """How the raw rule does on 2023-25, and where the calibrated rule puts a 50/50 undercut."""
+    res = models.fit_logit(d, "success ~ margin_s")
+    t = models.odds_table(res).set_index("term")
+    yes, no = d[d.rule_pred == 1], d[d.rule_pred == 0]
+    return pd.DataFrame([dict(n=len(d), accuracy=(d.rule_pred == d.success).mean(), n_rule_yes=len(yes),
+                              success_rule_yes=yes.success.mean(), n_rule_no=len(no), success_rule_no=no.success.mean(),
+                              or_margin=t.at["margin_s", "odds_ratio"], or_margin_lo=t.at["margin_s", "ci_lo"],
+                              or_margin_hi=t.at["margin_s", "ci_hi"],
+                              breakeven_margin_s=-res.params["Intercept"] / res.params["margin_s"])])
+
+
 def main():
     d = load()
     loso = models.loso(d, models.MODELS)
@@ -30,6 +42,7 @@ def main():
                                                               models.bootstrap_metric_diff(pred, a, b, m))))
              for split, pred in (("loso", loso), ("2026", test26)) for a, b in PAIRS for m in METRICS]
     pd.DataFrame(diffs).to_csv("results/rq2_diffs.csv", index=False)
+    rule_summary(d[d.year < 2026]).to_csv("results/rq2_rule.csv", index=False)
     loso.to_csv("results/rq2_predictions_loso.csv", index=False)
     test26.to_csv("results/rq2_predictions_2026.csv", index=False)
 

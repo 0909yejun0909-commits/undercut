@@ -41,4 +41,7 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   in-lap/out-lap columns don't separate the stop from the tyre effect.
 - 2026-10-18, rq1: the no-response group is reported as a count only. "Chaser ahead before the leader stops" is 0%
   by construction, since the chaser has just lost about 20 s in the pits.
-- 2026-10-18, reporting: the degradation odds ratio is also shown per 0.1 s/lap of tyre age. Same fit, rescaled.
+- 2026-10-18, reporting: the degradation odds ratio is also shown per 0.01 s/lap of tyre age (the observed range is
+  about −0.08 to 0.07 s/lap). Same fit, rescaled.
+- 2026-10-18, rq2: added results/rq2_rule.csv (the raw rule's hit rates and the calibrated rule's break-even margin,
+  in-sample on 2023–25). This is descriptive; the RQ2 comparison is unchanged.
