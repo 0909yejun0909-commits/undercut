@@ -59,3 +59,19 @@ def test_traffic_when_another_car_is_just_ahead_after_the_out_lap():
 def test_no_other_stops_gives_nan_gain_and_rule():
     f = features.add_features(ATTEMPT_ROW, {"2024_05": make_laps(PAIR(1.0))})
     assert np.isnan(f.gain_s.iloc[0]) and np.isnan(f.margin_s.iloc[0]) and np.isnan(f.rule_pred.iloc[0])
+
+
+def test_swing_splits_into_stop_execution_and_tyre_phase():
+    r = features.add_features(ATTEMPT_ROW, {"2024_05": LAPS_WITH_CAR3}).iloc[0]
+    assert r.mech_swing == pytest.approx(2.0)          # 1.0 s behind on lap 9, 1.0 s ahead at the end of lap 13
+    assert r.mech_stop_diff == pytest.approx(0.0)      # both stops cost 20 s over normal pace
+    assert r.mech_tyre_phase == pytest.approx(2.0)
+
+
+def test_slow_leader_stop_shows_up_as_stop_execution():
+    cars = PAIR(1.0)
+    cars[1]["slow"] = {11: 16.0, 12: 9.0}              # leader's stop 5 s slower
+    laps = make_laps({**cars, 3: CAR3})
+    a = attempts.find_attempts(laps, INFO)
+    r = features.add_features(a, {"2024_05": laps}).iloc[0]
+    assert r.mech_stop_diff == pytest.approx(5.0) and r.mech_tyre_phase == pytest.approx(2.0)

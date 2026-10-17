@@ -33,4 +33,12 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   model, and calibration of the 2023–25 model on 2026.
 
 ## Post-hoc changes
-(none yet)
+- 2026-10-18, attempts.py: fixed column dtypes so that concatenating with empty (wet) races keeps `responded`
+  boolean. This is a bug fix; the definitions are unchanged.
+- 2026-10-18, features.py (descriptive only, never a model input): added mech_swing (gap on lap n−1 minus gap at
+  the check lap), mech_stop_diff (leader's stop loss minus chaser's) and mech_tyre_phase (= swing − stop_diff). The
+  spot-check showed that in-lap vs out-lap times depend on each circuit's pit-lane layout, so the planned
+  in-lap/out-lap columns don't separate the stop from the tyre effect.
+- 2026-10-18, rq1: the no-response group is reported as a count only. "Chaser ahead before the leader stops" is 0%
+  by construction, since the chaser has just lost about 20 s in the pits.
+- 2026-10-18, reporting: the degradation odds ratio is also shown per 0.1 s/lap of tyre age. Same fit, rescaled.
