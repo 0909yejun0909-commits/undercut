@@ -44,12 +44,28 @@ def odds_with_scaled(res):
 
 def lookup(res, d):
     med = {c: d[c].median() for c in ("tyre_age_diff", "pit_loss_s", "deg_s_per_lap")}
-    grid = pd.DataFrame([dict(gap_s=g, delay_cat=k, compound_change="same", **med)
+    common = d.compound_change.mode()[0]  # hold the compound choice at the most common one
+    grid = pd.DataFrame([dict(gap_s=g, delay_cat=k, compound_change=common, **med)
                          for k in models.DELAY_LEVELS for g in np.arange(0.5, 3.01, 0.5)])
     grid["delay_cat"] = pd.Categorical(grid.delay_cat, categories=models.DELAY_LEVELS)
     grid["compound_change"] = pd.Categorical(grid.compound_change, categories=models.CHANGE_LEVELS)
     grid["p"] = np.asarray(res.predict(grid))
-    return grid[["gap_s", "delay_cat", "p"]]
+    return grid[["gap_s", "delay_cat", "compound_change", "p"]]
+
+
+MECH = ["mech_swing", "mech_stop_diff", "mech_tyre_phase"]
+
+
+def mechanism_table(d):
+    """Means (which add up: swing = stop_diff + tyre_phase) and medians by outcome, all over the same rows: the
+    attempts where both stops' time loss could be measured."""
+    k = d.dropna(subset=MECH)
+    cols = MECH + ["mech_traffic", "gap_s", "gain_s", "margin_s"]
+    t = k.groupby("success")[cols].mean()
+    for c in MECH:
+        t[f"median_{c}"] = k.groupby("success")[c].median()
+    t.insert(0, "n", k.groupby("success").size())
+    return t.reset_index()
 
 
 def sensitivity():
@@ -73,10 +89,7 @@ def main():
     odds_with_scaled(res).to_csv("results/rq1_odds.csv", index=False)
     lookup(res, d).to_csv("results/rq1_lookup.csv", index=False)
     sensitivity().to_csv("results/rq1_sensitivity.csv", index=False)
-    mech = d.groupby("success")[["mech_swing", "mech_stop_diff", "mech_tyre_phase", "mech_traffic", "gap_s",
-                                  "gain_s", "margin_s"]].mean()
-    mech.insert(0, "n", d.groupby("success").size())
-    mech.reset_index().to_csv("results/mechanism.csv", index=False)
+    mechanism_table(d).to_csv("results/mechanism.csv", index=False)
     nr = raw[~raw.responded]
     pd.DataFrame([dict(n=len(nr), races=nr.race_id.nunique(), n_responded=len(d))]).to_csv(
         "results/no_response.csv", index=False)

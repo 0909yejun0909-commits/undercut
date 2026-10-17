@@ -61,6 +61,12 @@ def _glm(formula):
 MODELS = {"base_rate": _base_rate, "rule": _rule, "rule_cal": _glm("success ~ margin_s"), "logit": _glm(FORMULA)}
 
 
+def breakeven(df, margin_col="margin_s"):
+    """The rule margin at which a logistic fit of success on that margin gives 50%: −intercept / slope."""
+    res = fit_logit(df, f"success ~ {margin_col}", cluster=False)
+    return float(-res.params["Intercept"] / res.params[margin_col])
+
+
 def metrics(y, p):
     y, p = np.asarray(y, dtype=float), np.asarray(p, dtype=float)
     q = np.clip(p, 1e-6, 1 - 1e-6)

@@ -45,3 +45,8 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   about −0.08 to 0.07 s/lap). Same fit, rescaled.
 - 2026-10-18, rq2: added results/rq2_rule.csv (the raw rule's hit rates and the calibrated rule's break-even margin,
   in-sample on 2023–25). This is descriptive; the RQ2 comparison is unchanged.
+- 2026-10-18, after the final review (none of these changes the attempt definition, the models or the metrics):
+  rq2_rule.csv adds a race-bootstrap CI for the break-even margin, plus the break-even with the out-lap left out
+  (gain × (delay − 1)). The mechanism table averages all parts over the same rows (attempts where both stops' loss
+  is measurable) and adds medians. The lookup chart holds the compound choice at the most common level ("harder")
+  instead of "same".

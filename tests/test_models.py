@@ -79,3 +79,12 @@ def test_bootstrap_diff_favours_the_better_model():
     pred = models.loso(models.prepare(SIM), {"logit": models.MODELS["logit"], "base": models.MODELS["base_rate"]})
     diff, lo, hi = models.bootstrap_metric_diff(pred, "logit", "base", "brier", n=300)
     assert diff < 0 and hi < 0
+
+
+def test_breakeven_margin_recovers_the_fifty_fifty_point():
+    rng = np.random.default_rng(3)
+    m = rng.uniform(-3, 5, 3000)
+    d = pd.DataFrame({"margin_s": m, "race_id": [f"r{i % 60}" for i in range(3000)],
+                      "success": (rng.uniform(size=3000) < 1 / (1 + np.exp(-2 * (m - 1.0)))).astype(float)})
+    assert models.breakeven(d) == pytest.approx(1.0, abs=0.1)
+    assert models.breakeven(d.assign(alt=d.margin_s + 0.5), "alt") == pytest.approx(1.5, abs=0.1)
