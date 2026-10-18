@@ -53,6 +53,8 @@ Run these steps in order. Each one is `uv run python -m analysis.<step>`.
 | `rq5b`, `rq5c` | Attempts to beat the simple prediction models: ridge, wider training data, ten new race-situation factors (exploratory; none did) → `results/rq5b_*.csv`, `rq5c_screen.csv` |
 | `figures` | Paper figures → `figures/*.pdf` |
 
+`reference/compounds.csv` holds Pirelli's compound nomination (C-numbers) for every race, built from Wikipedia with `build_compounds` (needs internet; 16 races cross-checked in `reference/compounds_checks.csv`).
+
 To get a chance for a given gap: `uv run python -m analysis.predict --gap 1.2`.
 
 The paper is in `paper/main.tex` (build it with `tectonic paper/main.tex`).
