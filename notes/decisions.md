@@ -59,3 +59,12 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   strong pace effect, but that measure sees the outcome (a successful chaser then runs in clean air), so it was
   replaced before anything was reported. A second pace measure uses only that race's laps before lap n−1. Team
   effects are tested by likelihood ratio against a gap + delay model. Six tests in all, none pre-specified.
+- 2026-10-18, NEW exploratory RQ5 (asked for by the author; not pre-registered): can an undercut be predicted before
+  the chaser stops? undercut/predict.py, analysis/rq5.py → results/rq5_*.csv, analysis/predict.py (command-line
+  tool). Compared on leave-one-season-out and 2026 as in RQ2: base rate, gap only, the pre-registered features
+  minus the response delay ("prestop"), gap + delay, and the full model. Gap only was the best pre-stop model; the
+  prestop model was worse (overfits, overconfident in calibration). Gap + delay beat the full model. The tool uses
+  gap only before the stop and gap + delay for each response. The choice was made by looking at the
+  leave-one-season-out scores, so those scores slightly flatter the chosen models; 2026 is the cleaner check.
+  A soft-tyre look (chaser coming off softs: 75% of 24 worked, OR 3.1 after gap + delay) was computed ad hoc
+  and not saved or used.

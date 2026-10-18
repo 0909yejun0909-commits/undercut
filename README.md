@@ -48,7 +48,10 @@ Run these steps in order. Each one is `uv run python -m analysis.<step>`.
 | `rq2` | Rule of thumb vs. model: leave one season out, then 2026 → `results/rq2_*.csv` |
 | `rq3` | 2026 vs. 2023–25 (exploratory) → `results/rq3_*.csv` |
 | `rq4` | Which teams and cars close the gap (exploratory, added after pre-registration) → `results/rq4_*.csv` |
+| `rq5` | Predicting an undercut before the stop: pre-stop models vs. base rate, held-out seasons (exploratory) → `results/rq5_*.csv` |
 | `figures` | Paper figures → `figures/*.pdf` |
+
+To get a chance for a given gap: `uv run python -m analysis.predict --gap 1.2`.
 
 The paper is in `paper/main.tex` (build it with `tectonic paper/main.tex`).
 
