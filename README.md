@@ -43,12 +43,14 @@ Run these steps in order. Each one is `uv run python -m analysis.<step>`.
 |---|---|
 | `build_laps` | Cached races → one lap table per race (`data/laps/`), with wet flags |
 | `build_teams` | Each driver's team in every race, from the cached results → `data/teams.parquet` |
+| `build_weather` | Track and air temperature for every race, from the cache → `data/weather.parquet` |
 | `build_attempts` | Finds undercut attempts and adds features from the other cars. Writes five variants (main, gap2, gap5, check2, relaxed) to `data/attempts_*.parquet`, plus `results/attempt_counts.csv` |
 | `rq1` | Success rates, logistic regression, lookup table, sensitivity checks, where the time comes from → `results/rq1_*.csv`, `mechanism.csv`, `no_response.csv` |
 | `rq2` | Rule of thumb vs. model: leave one season out, then 2026 → `results/rq2_*.csv` |
 | `rq3` | 2026 vs. 2023–25 (exploratory) → `results/rq3_*.csv` |
 | `rq4` | Which teams and cars close the gap (exploratory, added after pre-registration) → `results/rq4_*.csv` |
 | `rq5` | Predicting an undercut before the stop: pre-stop models vs. base rate, held-out seasons (exploratory) → `results/rq5_*.csv` |
+| `rq5b`, `rq5c` | Attempts to beat the simple prediction models: ridge, wider training data, ten new race-situation factors (exploratory; none did) → `results/rq5b_*.csv`, `rq5c_screen.csv` |
 | `figures` | Paper figures → `figures/*.pdf` |
 
 To get a chance for a given gap: `uv run python -m analysis.predict --gap 1.2`.

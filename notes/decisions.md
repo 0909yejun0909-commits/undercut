@@ -75,3 +75,8 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   results/rq5b_*.csv. None beat the simple models; ridge was worse, wide training tied. A second round, added
   after seeing the first, tried a two-step model (predict the leader's response from gap and leader tyre age,
   then success from gap + delay): 0.210 vs 0.209 for gap only, so not kept or saved. The tool is unchanged.
+- 2026-10-18, RQ5c (exploratory; the author asked about variables not yet considered): ten pre-stop factors
+  (undercut/context.py; weather via analysis/build_weather.py → data/weather.parquet), each added alone to gap
+  only and to gap + delay. analysis/rq5c.py → results/rq5c_screen.csv. Bar fixed before scoring: held-out Brier
+  improvement with CI excluding 0, and no worse on 2026. None passed. In-sample, closing rate had OR 3.1 per s/lap
+  (p = 0.03) and street circuit 0.47 (p = 0.10); with 20 tests about one p < 0.05 is expected by chance.
