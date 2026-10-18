@@ -42,10 +42,12 @@ Run these steps in order. Each one is `uv run python -m analysis.<step>`.
 | Step | What it does |
 |---|---|
 | `build_laps` | Cached races → one lap table per race (`data/laps/`), with wet flags |
+| `build_teams` | Each driver's team in every race, from the cached results → `data/teams.parquet` |
 | `build_attempts` | Finds undercut attempts and adds features from the other cars. Writes five variants (main, gap2, gap5, check2, relaxed) to `data/attempts_*.parquet`, plus `results/attempt_counts.csv` |
 | `rq1` | Success rates, logistic regression, lookup table, sensitivity checks, where the time comes from → `results/rq1_*.csv`, `mechanism.csv`, `no_response.csv` |
 | `rq2` | Rule of thumb vs. model: leave one season out, then 2026 → `results/rq2_*.csv` |
 | `rq3` | 2026 vs. 2023–25 (exploratory) → `results/rq3_*.csv` |
+| `rq4` | Which teams and cars close the gap (exploratory, added after pre-registration) → `results/rq4_*.csv` |
 | `figures` | Paper figures → `figures/*.pdf` |
 
 The paper is in `paper/main.tex` (build it with `tectonic paper/main.tex`).
