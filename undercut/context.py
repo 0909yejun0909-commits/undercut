@@ -66,3 +66,17 @@ def add_context(df, laps_by_race, weather, events, team_of):
         x["teammates"] = int(team_of.get((r.race_id, r.chaser)) == team_of.get((r.race_id, r.leader)))
         rows.append(x)
     return df.reset_index(drop=True).join(pd.DataFrame(rows))
+
+
+def add_hardness(df, comp):
+    """Pirelli C-numbers (higher = softer) for the chaser's old and new tyres and the leader's old tyre, from the
+    race's nomination in `comp` (reference/compounds.csv); step_c = new − old (negative = going harder);
+    race_soft_c = the softest compound that race."""
+    c = comp.set_index("race_id")
+    num = lambda rid, label: float(c.at[rid, label.lower()]) if label in ("SOFT", "MEDIUM", "HARD") else np.nan
+    out = pd.DataFrame({"old_c": [num(r, x) for r, x in zip(df.race_id, df.chaser_old)],
+                        "new_c": [num(r, x) for r, x in zip(df.race_id, df.chaser_new)],
+                        "leader_old_c": [num(r, x) for r, x in zip(df.race_id, df.leader_old)],
+                        "race_soft_c": [float(c.at[r, "soft"]) for r in df.race_id]})
+    out["step_c"] = out.new_c - out.old_c
+    return df.reset_index(drop=True).join(out)

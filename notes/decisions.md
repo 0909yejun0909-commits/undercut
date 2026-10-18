@@ -80,3 +80,11 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   only and to gap + delay. analysis/rq5c.py → results/rq5c_screen.csv. Bar fixed before scoring: held-out Brier
   improvement with CI excluding 0, and no worse on 2026. None passed. In-sample, closing rate had OR 3.1 per s/lap
   (p = 0.03) and street circuit 0.47 (p = 0.10); with 20 tests about one p < 0.05 is expected by chance.
+- 2026-10-18, tyre hardness (the author asked for the actual Pirelli compounds): reference/compounds.csv holds the
+  hard/medium/soft C-numbers for all 87 races, parsed from each race's English Wikipedia article
+  (analysis/build_compounds.py; the sentence and URL are kept as evidence). 16 races were checked against
+  Pirelli press releases or news sites (reference/compounds_checks.csv; all agree, enforced by a test). The parser
+  was written before its tests (tests/test_compounds.py added after). Five hardness factors (new tyre, old tyre,
+  step, leader's old tyre, race's softest) were screened with the RQ5c bar → results/rq5c_tyres.csv: none passed,
+  and none had an in-sample effect. The ad hoc "off softs" hint does not survive: the old tyre's real hardness
+  has OR 1.00.
