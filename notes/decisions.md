@@ -68,3 +68,10 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   leave-one-season-out scores, so those scores slightly flatter the chosen models; 2026 is the cleaner check.
   A soft-tyre look (chaser coming off softs: 75% of 24 worked, OR 3.1 after gap + delay) was computed ad hoc
   and not saved or used.
+- 2026-10-18, RQ5b (exploratory; the author asked for a better model): candidates fixed before scoring were gap
+  only and gap + delay each trained on a wider attempt set (gap up to 5 s, yellow-flag laps allowed: 252 vs 154
+  attempts in 2023–25), and ridge logistic regressions with every factor (plus fresh-tyre gain, race progress and
+  coming off softs), penalty chosen by leave-one-season-out inside the training seasons only. analysis/rq5b.py →
+  results/rq5b_*.csv. None beat the simple models; ridge was worse, wide training tied. A second round, added
+  after seeing the first, tried a two-step model (predict the leader's response from gap and leader tyre age,
+  then success from gap + delay): 0.210 vs 0.209 for gap only, so not kept or saved. The tool is unchanged.
