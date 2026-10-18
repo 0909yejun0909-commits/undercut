@@ -50,3 +50,12 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   (gain × (delay − 1)). The mechanism table averages all parts over the same rows (attempts where both stops' loss
   is measurable) and adds medians. The lookup chart holds the compound choice at the most common level ("harder")
   instead of "same".
+- 2026-10-18, NEW exploratory RQ4 (asked for by the author after the paper was drafted; not pre-registered):
+  which teams and cars close the gap? undercut/cars.py + analysis/rq4.py, results/rq4_*.csv. Team names come from
+  the cached FastF1 results (analysis/build_teams.py → data/teams.parquet), with renamed teams merged
+  (AlphaTauri/RB/Racing Bulls; Alfa Romeo/Kick Sauber/Audi). Car traits are chaser-vs-leader differences, each the
+  team's median over the OTHER dry races of the same season, measured relative to each race's field: race pace,
+  own tyre-wear slope, and stop loss (pit crew). A first version took pace from the attempt's own race; it showed a
+  strong pace effect, but that measure sees the outcome (a successful chaser then runs in clean air), so it was
+  replaced before anything was reported. A second pace measure uses only that race's laps before lap n−1. Team
+  effects are tested by likelihood ratio against a gap + delay model. Six tests in all, none pre-specified.

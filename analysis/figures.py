@@ -112,10 +112,26 @@ def fig5_2026():
     return fig
 
 
+def fig6_teams():
+    d = read("rq4_teams")
+    fig, axes = plt.subplots(1, 2, figsize=(6.5, 3.6))
+    for ax, role, title, color, mark in ((axes[0], "chaser", "Team making the undercut", SLOT1, "o"),
+                                         (axes[1], "leader", "Team being undercut", SLOT2, "s")):
+        g = d[d.role == role].sort_values("rate").reset_index(drop=True)
+        y = range(len(g))
+        ax.errorbar(g.rate, y, xerr=[g.rate - g.ci_lo, g.ci_hi - g.rate], fmt=mark, color=color, ms=6, lw=1.2,
+                    capsize=2)
+        ax.set_yticks(list(y), [f"{t} ({n})" for t, n in zip(g.team, g.n)], fontsize=8)
+        ax.axvline(0.5, color=INK2, lw=0.8, ls=":")
+        ax.set(xlim=(0, 1), xlabel="Share that worked")
+        ax.set_title(title, fontsize=10, color=INK)
+    return fig
+
+
 def main():
     os.makedirs("figures", exist_ok=True)
     for name, f in (("fig1_lookup", fig1_lookup), ("fig2_rates", fig2_rates), ("fig3_models", fig3_models),
-                    ("fig4_mechanism", fig4_mechanism), ("fig5_2026", fig5_2026)):
+                    ("fig4_mechanism", fig4_mechanism), ("fig5_2026", fig5_2026), ("fig6_teams", fig6_teams)):
         fig = f()
         fig.tight_layout()
         fig.savefig(f"figures/{name}.pdf")

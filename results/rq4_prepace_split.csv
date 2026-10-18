@@ -1,0 +1,4 @@
+# exploratory: added after pre-registration, 2023-25 n=146
+side,n,rate,ci_lo,ci_hi
+chaser faster,49,0.5918367346938775,0.45652173913043476,0.72
+chaser not faster,97,0.422680412371134,0.30927366447985005,0.5469017551369861
