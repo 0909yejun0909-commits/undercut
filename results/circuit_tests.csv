@@ -1,0 +1,11 @@
+# exploratory: added after pre-registration
+test,stat,df,p,n,circuits,ci_lo,ci_hi
+likelihood ratio,35.56757275216634,18.0,0.00801210143500173,154.0,18.0,,
+permutation (races reshuffled),35.56757275216634,18.0,0.015,1000.0,18.0,,
+"held-out Brier, gap + delay",0.19958407525899258,,,,,,
+"held-out Brier, + circuit",0.23248747059676525,,,,,,
+held-out Brier difference,0.03290339533777267,,,,,-0.01088169096518902,0.08833936802884447
+circuit rate vs median_gap_s (Spearman),-0.5441565855811981,,0.008842496375058281,22.0,,,
+circuit rate vs median_deg (Spearman),0.20677950252085528,,0.35585008584931266,22.0,,,
+circuit rate vs median_pit_loss_s (Spearman),0.1741301073859834,,0.4383296857907984,22.0,,,
+circuit rate vs median_gain_s (Spearman),0.13460715538061216,,0.5503484667130673,22.0,,,

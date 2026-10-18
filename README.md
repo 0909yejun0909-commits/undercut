@@ -51,6 +51,8 @@ Run these steps in order. Each one is `uv run python -m analysis.<step>`.
 | `rq4` | Which teams and cars close the gap (exploratory, added after pre-registration) → `results/rq4_*.csv` |
 | `rq5` | Predicting an undercut before the stop: pre-stop models vs. base rate, held-out seasons (exploratory) → `results/rq5_*.csv` |
 | `rq5b`, `rq5c` | Attempts to beat the simple prediction models: ridge, wider training data, ten new race-situation factors (exploratory; none did) → `results/rq5b_*.csv`, `rq5c_screen.csv` |
+| `stakes` | What an undercut is worth at the flag (places, points) and success by running position (exploratory) → `results/stakes_*.csv` |
+| `circuits` | Success by circuit; does the circuit add to gap + delay, in-sample and on held-out seasons (exploratory) → `results/circuit_*.csv` |
 | `figures` | Paper figures → `figures/*.pdf` |
 
 `reference/compounds.csv` holds Pirelli's compound nomination (C-numbers) for every race, built from Wikipedia with `build_compounds` (needs internet; 16 races cross-checked in `reference/compounds_checks.csv`).

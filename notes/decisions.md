@@ -88,3 +88,14 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   step, leader's old tyre, race's softest) were screened with the RQ5c bar → results/rq5c_tyres.csv: none passed,
   and none had an in-sample effect. The ad hoc "off softs" hint does not survive: the old tyre's real hardness
   has OR 1.00.
+- 2026-10-18, what an undercut is worth, running position and circuits (exploratory; the author asked "what about
+  points and position?" and "what about circuits?", after quick scratch looks at both). undercut/stakes.py,
+  analysis/stakes.py → results/stakes_*.csv, analysis/circuits.py → results/circuit_*.csv. Finishing positions come
+  from the cached official classification; a disqualified car is unclassified (two failed 2023–25 attempts: RUS
+  2024_14, HAM 2025_02; the scratch version had counted them as P19–20). Points use 25…1 with no fastest-lap point.
+  The points swing is within the pair, for attempts where the leader ran in the top ten on lap n−1. The position
+  groups (P1–3, P4–6, P7–10, P11+) and the top-six indicator were chosen after the scratch look, so the top-six
+  odds ratio (0.41, p = 0.06) is a hint. Circuit = event name (2023–25 only, where event and circuit agree; 2026's
+  "Spanish" GP is Madrid). Circuits with < 4 attempts are pooled as "other" for the tests; held-out predictions
+  map an unseen circuit to "other". The circuit improves the in-sample fit (LR p = 0.008, permutation p = 0.015)
+  but not held-out prediction (Brier 0.200 → 0.232, CI of the difference includes 0).
