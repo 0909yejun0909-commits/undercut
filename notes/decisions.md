@@ -99,3 +99,15 @@ Fixed before any model saw a real attempt (git tag `prereg`). Any later change t
   "Spanish" GP is Madrid). Circuits with < 4 attempts are pooled as "other" for the tests; held-out predictions
   map an unseen circuit to "other". The circuit improves the in-sample fit (LR p = 0.008, permutation p = 0.015)
   but not held-out prediction (Brier 0.200 → 0.232, CI of the difference includes 0).
+
+## 2026-11-24 — revisions after peer review (WSAJ, accepted with comments)
+- Reviewer 1: the 314 no-response cases. New exploratory `analysis/no_response.py`. Classes each case as
+  `never_stopped` (leader made no further stop) or `late_response` (leader stopped 6+ laps later). Late responses
+  are checked like attempts (chaser ahead at the end of m + 2) and kept only as clean comparisons: all laps green
+  for both cars through the check lap (same rule as attempts; without it the rate is 60% vs 69%), no second chaser
+  stop in between, chaser stop after lap 3. Never-stopped cases are checked at the last lap both cars completed.
+  New paper section 3.9; placed last so the section numbers the reviewer cited stay the same.
+- Reviewer 4: `analysis/tyre_gain_check.py` compares the rule's g × d with the measured tyre phase (r = 0.62;
+  34% miss by > 2 s). The tyre phase includes traffic and the out-lap, which the paper says.
+- Reviewers 2 and 3: text only (pre-stop framing in Intro, the lookup paragraph, Discussion; 2026 called preliminary in
+  the abstract, RQ3, Discussion, Limitations, Conclusion). No existing result number changed.
